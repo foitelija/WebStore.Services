@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BlazorShop.Shared
 {
-    internal class Category
+    public class Category
     {
     }
 }
