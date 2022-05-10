@@ -16,8 +16,11 @@
                <p>@product.Description</p>
                @if(product.OriginalPrice > product.Price)
                 {
-                    
+                    <h6 class = "text-muted original-price">$@product.OriginalPrice</h6>
                 }
+                <h5 class="price">
+                    $@product.Price
+                </h5>
             </div>
 
        </li>
@@ -32,9 +35,9 @@
         {
             Id =1,
             CategoryId = 1,
-            Title  = "The Hitch's Guide",
-            Description = "This is Description of Hitch",
-            Image = "https://en.wikipedia.org/wiki/The_Hitchhiker%27s_Guide_to_the_Galaxy#/media/File:H2G2_UK_front_cover.jpg",
+            Title  = "Call of Duty 4: Modern Warfare",
+            Description = " мультиплатформенная компьютерная игра в жанре шутера от первого лица, разработанная американской компанией Infinity Ward и изданная Activision. Игра является четвёртой в серии Call of Duty и первой в подсерии Modern Warfare; официально проект был анонсирован 26 мая 2007 года.",
+            Image = "https://upload.wikimedia.org/wikipedia/ru/2/29/Cod4.jpg",
             Price = 9.99m,
             OriginalPrice  = 19.99m,
         },
