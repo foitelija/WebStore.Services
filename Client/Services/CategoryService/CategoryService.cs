@@ -1,45 +1,24 @@
 ﻿using BlazorShop.Shared;
 using System.Collections.Generic;
+using System.Net.Http;
+using System.Net.Http.Json;
+using System.Threading.Tasks;
 
 namespace BlazorShop.Client.Services.CategoryService
 {
     public class CategoryService : ICategoryService
     {
+        private readonly HttpClient _http;
+
         public List<Category> Categories { get; set; } = new List<Category>();
 
-        public void LoadCategories()
+        public CategoryService(HttpClient http)
         {
-            Categories = new List<Category>
-            {
-                new Category
-                {
-                    Id = 1,
-                    Name = "Action",
-                    Url = "action-games",
-                    Icon = "aperture",
-                },
-                new Category
-                {
-                    Id = 2,
-                    Name ="Role play",
-                    Url ="role-play-games",
-                    Icon ="aperture",
-                },
-                new Category
-                {
-                    Id=3,
-                    Name ="Fight",
-                    Url="fighting-games",
-                    Icon ="aperture",
-                },
-                new Category
-                {
-                    Id=4,
-                    Name="Race",
-                    Url="racing-games",
-                    Icon="aperture",
-                },
-            };
+            _http = http;
+        }
+        public async Task LoadCategories()
+        {
+            Categories = await _http.GetFromJsonAsync<List<Category>>("api/Category");
         }
     }
 }
