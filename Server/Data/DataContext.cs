@@ -1,5 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using BlazorShop.Shared;
+using System;
+using System.Collections.Generic;
+
 namespace BlazorShop.Server.Data
 {
     public class DataContext :DbContext
@@ -11,6 +14,7 @@ namespace BlazorShop.Server.Data
 
         public DbSet<Category> Categories { get; set; }
         public DbSet<Product> Products { get; set; }
+        public DbSet<Edition> Editions { get; set; }
 
         //Creating initial values in the database
         //Создание начальный значений в базе данных
@@ -33,6 +37,7 @@ namespace BlazorShop.Server.Data
                     Image = "https://upload.wikimedia.org/wikipedia/ru/2/29/Cod4.jpg",
                     Price = 9.99m,
                     OriginalPrice = 19.99m,
+                    DateCreated = new DateTime(2022,1,1),
                 },
                new Product
                {
@@ -42,7 +47,8 @@ namespace BlazorShop.Server.Data
                    Description = "Half-Life 2 Description",
                    Image = "https://upload.wikimedia.org/wikipedia/en/2/25/Half-Life_2_cover.jpg",
                    Price = 8.19m,
-                   OriginalPrice = 29.99m
+                   OriginalPrice = 29.99m,
+                   DateCreated = new DateTime(2022, 1, 1),
                },
                new Product
                {
@@ -52,7 +58,8 @@ namespace BlazorShop.Server.Data
                    Description = "Rockstar Games",
                    Image = "https://upload.wikimedia.org/wikipedia/ru/c/c8/GTAV_Official_Cover_Art.jpg",
                    Price = 7.99m,
-                   OriginalPrice = 8.99m
+                   OriginalPrice = 8.99m,
+                   DateCreated = new DateTime(2022, 1, 1),
                },
                new Product
                {
@@ -62,7 +69,8 @@ namespace BlazorShop.Server.Data
                    Description = "Мультиплатформенная компьютерная игра в жанре файтинг, разработанная компанией NetherRealm Studios для игровых платформ PlayStation 4, Xbox One и Microsoft Windows.",
                    Image = "https://upload.wikimedia.org/wikipedia/ru/thumb/3/34/Mortal_Kombat_X.jpg/800px-Mortal_Kombat_X.jpg",
                    Price = 11.09m,
-                   OriginalPrice = 11.09m
+                   OriginalPrice = 11.09m,
+                   DateCreated = new DateTime(2022, 1, 1),
                },
                new Product
                {
@@ -72,7 +80,8 @@ namespace BlazorShop.Server.Data
                    Description = "Представляем новинку революционной серии игр The Crew! Насладитесь азартом и атмосферой американских моторных состязаний в потрясающем открытом мире The Crew 2.",
                    Image = "https://upload.wikimedia.org/wikipedia/ru/4/42/The_Crew_2_coverart.jpg",
                    Price = 5.99m,
-                   OriginalPrice = 15.99m
+                   OriginalPrice = 15.99m,
+                   DateCreated = new DateTime(2022, 1, 1),
                },
                new Product
                {
@@ -82,8 +91,30 @@ namespace BlazorShop.Server.Data
                    Description = "World of Warcraft: Battle for Azeroth — седьмой дополнение для одной из самых известных MMORPG, World of Warcraft.",
                    Image = "https://upload.wikimedia.org/wikipedia/ru/thumb/a/ae/World_of_Warcraft_Battle_for_Azeroth_Box_Shot.jpg/800px-World_of_Warcraft_Battle_for_Azeroth_Box_Shot.jpg",
                    Price = 35.99m,
-                   OriginalPrice = 40.01m
+                   OriginalPrice = 40.01m,
+                   DateCreated = new DateTime(2022, 1, 1),
                });
+
+            modelBuilder.Entity<Edition>().HasData(
+                new Edition { Id = 1, Name = "Ключ активации"},
+                new Edition { Id = 2, Name = "Gift-подарок" },
+                new Edition { Id = 3, Name = "Аккаунт"}
+                );
+
+            modelBuilder.SharedTypeEntity<Dictionary<string, object>>("EditionProduct").HasData(
+                
+                new { EditionsId = 1, ProductsId = 1},
+                new { EditionsId = 1, ProductsId = 2 },
+                new { EditionsId = 1, ProductsId = 3 },
+                new { EditionsId = 1, ProductsId = 4 },
+                new { EditionsId = 1, ProductsId = 5 },
+                new { EditionsId = 1, ProductsId = 6 },
+                new { EditionsId = 2, ProductsId = 1 },
+                new { EditionsId = 2, ProductsId = 2 },
+                new { EditionsId = 2, ProductsId = 5 },
+                new { EditionsId = 3, ProductsId = 3 },
+                new { EditionsId = 3, ProductsId = 6 }
+                );
         }
     }
 }

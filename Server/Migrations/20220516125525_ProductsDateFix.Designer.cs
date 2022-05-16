@@ -4,14 +4,16 @@ using BlazorShop.Server.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace BlazorShop.Server.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20220516125525_ProductsDateFix")]
+    partial class ProductsDateFix
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -67,38 +69,6 @@ namespace BlazorShop.Server.Migrations
                             Icon = "aperture",
                             Name = "Race",
                             Url = "racing-games"
-                        });
-                });
-
-            modelBuilder.Entity("BlazorShop.Shared.Edition", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Editions");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Name = "Ключ активации"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Name = "Gift-подарок"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Name = "Аккаунт"
                         });
                 });
 
@@ -226,78 +196,6 @@ namespace BlazorShop.Server.Migrations
                         });
                 });
 
-            modelBuilder.Entity("EditionProduct", b =>
-                {
-                    b.Property<int>("EditionsId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ProductsId")
-                        .HasColumnType("int");
-
-                    b.HasKey("EditionsId", "ProductsId");
-
-                    b.HasIndex("ProductsId");
-
-                    b.ToTable("EditionProduct");
-
-                    b.HasData(
-                        new
-                        {
-                            EditionsId = 1,
-                            ProductsId = 1
-                        },
-                        new
-                        {
-                            EditionsId = 1,
-                            ProductsId = 2
-                        },
-                        new
-                        {
-                            EditionsId = 1,
-                            ProductsId = 3
-                        },
-                        new
-                        {
-                            EditionsId = 1,
-                            ProductsId = 4
-                        },
-                        new
-                        {
-                            EditionsId = 1,
-                            ProductsId = 5
-                        },
-                        new
-                        {
-                            EditionsId = 1,
-                            ProductsId = 6
-                        },
-                        new
-                        {
-                            EditionsId = 2,
-                            ProductsId = 1
-                        },
-                        new
-                        {
-                            EditionsId = 2,
-                            ProductsId = 2
-                        },
-                        new
-                        {
-                            EditionsId = 2,
-                            ProductsId = 5
-                        },
-                        new
-                        {
-                            EditionsId = 3,
-                            ProductsId = 3
-                        },
-                        new
-                        {
-                            EditionsId = 3,
-                            ProductsId = 6
-                        });
-                });
-
             modelBuilder.Entity("BlazorShop.Shared.Product", b =>
                 {
                     b.HasOne("BlazorShop.Shared.Category", "Category")
@@ -307,21 +205,6 @@ namespace BlazorShop.Server.Migrations
                         .IsRequired();
 
                     b.Navigation("Category");
-                });
-
-            modelBuilder.Entity("EditionProduct", b =>
-                {
-                    b.HasOne("BlazorShop.Shared.Edition", null)
-                        .WithMany()
-                        .HasForeignKey("EditionsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("BlazorShop.Shared.Product", null)
-                        .WithMany()
-                        .HasForeignKey("ProductsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

@@ -4,14 +4,16 @@ using BlazorShop.Server.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace BlazorShop.Server.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20220516130000_Editions")]
+    partial class Editions
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -83,23 +85,6 @@ namespace BlazorShop.Server.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Editions");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Name = "Ключ активации"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Name = "Gift-подарок"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Name = "Аккаунт"
-                        });
                 });
 
             modelBuilder.Entity("BlazorShop.Shared.Product", b =>
@@ -239,63 +224,6 @@ namespace BlazorShop.Server.Migrations
                     b.HasIndex("ProductsId");
 
                     b.ToTable("EditionProduct");
-
-                    b.HasData(
-                        new
-                        {
-                            EditionsId = 1,
-                            ProductsId = 1
-                        },
-                        new
-                        {
-                            EditionsId = 1,
-                            ProductsId = 2
-                        },
-                        new
-                        {
-                            EditionsId = 1,
-                            ProductsId = 3
-                        },
-                        new
-                        {
-                            EditionsId = 1,
-                            ProductsId = 4
-                        },
-                        new
-                        {
-                            EditionsId = 1,
-                            ProductsId = 5
-                        },
-                        new
-                        {
-                            EditionsId = 1,
-                            ProductsId = 6
-                        },
-                        new
-                        {
-                            EditionsId = 2,
-                            ProductsId = 1
-                        },
-                        new
-                        {
-                            EditionsId = 2,
-                            ProductsId = 2
-                        },
-                        new
-                        {
-                            EditionsId = 2,
-                            ProductsId = 5
-                        },
-                        new
-                        {
-                            EditionsId = 3,
-                            ProductsId = 3
-                        },
-                        new
-                        {
-                            EditionsId = 3,
-                            ProductsId = 6
-                        });
                 });
 
             modelBuilder.Entity("BlazorShop.Shared.Product", b =>
