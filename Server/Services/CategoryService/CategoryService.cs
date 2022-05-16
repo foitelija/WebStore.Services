@@ -1,4 +1,6 @@
-﻿using BlazorShop.Shared;
+﻿using BlazorShop.Server.Data;
+using BlazorShop.Shared;
+using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -7,22 +9,20 @@ namespace BlazorShop.Server.Services.CategoryService
 {
     public class CategoryService : ICategoryService
     {
-        public List<Category> Categories { get; set; } = new List<Category>
+        private readonly DataContext _context;
+        public CategoryService(DataContext context)
         {
-            new Category { Id = 1, Name = "Action", Url ="action-games", Icon ="aperture"},
-            new Category { Id = 2, Name = "Role-play", Url ="role-play-games", Icon ="aperture"},
-            new Category { Id = 3, Name = "Fight", Url ="fighting-games", Icon ="aperture"},
-            new Category { Id = 4, Name = "Race", Url ="racing-games", Icon ="aperture"},
-        };
+            _context = context;
+        }
         public async Task<List<Category>> GetCategories()
         {
             
-            return Categories;
+            return  await _context.Categories.ToListAsync();
         }
 
         public async Task<Category> GetCategoryByUrl(string categoryUrl)
         {
-            return Categories.FirstOrDefault(c => c.Url.ToLower().Equals(categoryUrl.ToLower()));
+            return await _context.Categories.FirstOrDefaultAsync(c => c.Url.ToLower().Equals(categoryUrl.ToLower()));
         }
     }
 }
