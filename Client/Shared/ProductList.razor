@@ -16,7 +16,7 @@
                </a>
                <p>@product.Description</p>
                 <h5 class="price">
-                    $@GetPriceText(product)
+                    @GetPriceText(product)
                 </h5>
             </div>
 
@@ -49,6 +49,6 @@
             return $"${variants[0].Price}";
         }
         decimal minPrice = variants.Min(v=>v.Price);
-        return $"Starting at ${minPrice}";
+        return $"Стартует с ${minPrice}";
     }
 }
