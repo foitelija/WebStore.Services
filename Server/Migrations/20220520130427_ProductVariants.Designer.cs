@@ -4,14 +4,16 @@ using BlazorShop.Server.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace BlazorShop.Server.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20220520130427_ProductVariants")]
+    partial class ProductVariants
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -43,28 +45,28 @@ namespace BlazorShop.Server.Migrations
                         new
                         {
                             Id = 1,
-                            Icon = "https://i.ibb.co/s1pCNrL/action-games-24px.png",
+                            Icon = "https://ibb.co/xgKYBQV",
                             Name = "Action",
                             Url = "action-games"
                         },
                         new
                         {
                             Id = 2,
-                            Icon = "https://i.ibb.co/rph11zV/rpg-games-24px.png",
+                            Icon = "https://ibb.co/3FbLLjn",
                             Name = "Role-play",
                             Url = "role-play-games"
                         },
                         new
                         {
                             Id = 3,
-                            Icon = "https://i.ibb.co/tbcPJTd/boxing-games-24px.png",
+                            Icon = "https://ibb.co/8j247Lh",
                             Name = "Fight",
                             Url = "fighting-games"
                         },
                         new
                         {
                             Id = 4,
-                            Icon = "https://i.ibb.co/vZ6mQXF/race-games-24px.png",
+                            Icon = "https://ibb.co/gzLwP42",
                             Name = "Race",
                             Url = "racing-games"
                         });
@@ -275,36 +277,36 @@ namespace BlazorShop.Server.Migrations
                         {
                             ProductId = 1,
                             EditionId = 2,
-                            OriginalPrice = 0m,
-                            Price = 7.99m
+                            OriginalPrice = 19.99m,
+                            Price = 9.99m
                         },
                         new
                         {
                             ProductId = 2,
                             EditionId = 2,
-                            OriginalPrice = 0m,
-                            Price = 5.19m
+                            OriginalPrice = 29.99m,
+                            Price = 8.19m
                         },
                         new
                         {
                             ProductId = 5,
                             EditionId = 2,
-                            OriginalPrice = 0m,
-                            Price = 4.99m
+                            OriginalPrice = 15.99m,
+                            Price = 5.99m
                         },
                         new
                         {
                             ProductId = 3,
                             EditionId = 3,
-                            OriginalPrice = 0m,
-                            Price = 5.99m
+                            OriginalPrice = 8.99m,
+                            Price = 7.99m
                         },
                         new
                         {
                             ProductId = 6,
                             EditionId = 3,
-                            OriginalPrice = 0m,
-                            Price = 25.99m
+                            OriginalPrice = 40.01m,
+                            Price = 35.99m
                         });
                 });
 
