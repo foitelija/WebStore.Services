@@ -4,9 +4,11 @@
 @inject IProductService ProductService;
 @inject ISyncLocalStorageService LocalStorage
 
+<PageTitle Title="Самый популярный в мире магазин ключей, сделанный не на коленках." />
+
 @if(category != null)
 {
-    <h1>Добро пожаловать в секцию @category.Name</h1>
+    <h1>Добро пожаловать в раздел @category.Name</h1>
     <ProductList />
 }
 else
