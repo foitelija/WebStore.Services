@@ -43,5 +43,10 @@ namespace BlazorShop.Client.Services.ProductService
         {
             return await _http.GetFromJsonAsync<Product>($"api/Product/{id}");
         }
+
+        public async Task<List<Product>> SearchProducts(string searchText)
+        {
+            return await _http.GetFromJsonAsync<List<Product>>($"api/Product/Search/{searchText}");
+        }
     }
 }
