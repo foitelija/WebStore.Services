@@ -1,5 +1,6 @@
 ﻿@page "/cart"
 @inject ICartService CartService
+@inject NavigationManager NavigationManager
 
 @if (!orderPlaced)
 {
@@ -19,9 +20,11 @@ else
 				<h5><a href="/product/@item.ProductId">@item.ProductTitle</a></h5>
 				<span>@item.EditionName</span><br>
 				<button class="btn-delete" @onclick="@(()=>DeleteItem(item))">Убрать</button>
+				
 				<EditForm Model="item">
 					<InputNumber id="quantity" @bind-Value="item.Quantity" class="form-control" style="width: 70px" />
 				</EditForm>
+
 			</div>
 			<div class="item-price">$@(item.Price * item.Quantity)</div>
 			</div>
@@ -74,7 +77,9 @@ else
 
 	private async Task PlaceOrder()
 	{
-		orderPlaced = true;
+		string checkoutUrl = await CartService.CheckOut();
+		NavigationManager.NavigateTo(checkoutUrl);
+		//orderPlaced = true;
 		await CartService.EmptyCart();
 	}
 }

@@ -13,5 +13,6 @@ namespace BlazorShop.Client.Services.CartService
 
         Task DeleteItem(CartItem item);
         Task EmptyCart();
+        Task<string> CheckOut();
     }
 }
