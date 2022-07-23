@@ -1,0 +1,50 @@
+﻿@page "/"
+@page "/{categoryurl}"
+@inject ICategoryService CategoryService;
+@inject IProductService ProductService;
+@inject ISyncLocalStorageService LocalStorage
+
+<PageTitle Title="Самый популярный в мире магазин ключей, сделанный не на коленках." />
+
+@if(category != null)
+{
+    <h1>Добро пожаловать в раздел @category.Name</h1>
+    <ProductList />
+}
+else
+{
+    <AuthorizeView>
+        <NotAuthorized>
+            <h1>Добро пожаловать в магазин ключей Steam</h1>
+        </NotAuthorized>
+        <Authorized>
+            <h1>Добро пожаловать обратно.</h1>
+        </Authorized>
+    </AuthorizeView>
+    
+    <ProductList/>
+}
+
+
+
+@code
+{
+    [Parameter]
+    public string CategoryUrl { get; set; }
+
+    private Category category = null;
+
+    protected override async Task OnParametersSetAsync()
+    {
+        await ProductService.LoadProducts(CategoryUrl);
+        if(CategoryUrl != null)
+        {
+            category = CategoryService.Categories.FirstOrDefault(c => c.Url.ToLower().Equals(CategoryUrl.ToLower()));
+        }
+        else
+        {
+            category = null;
+        }
+    }
+}
+
