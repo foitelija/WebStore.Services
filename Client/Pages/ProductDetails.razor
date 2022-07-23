@@ -1,11 +1,19 @@
 ﻿@page "/product/{id:int}";
+@using BlazorShop.Shared
+@inject HttpClient Http
+@inject IJSRuntime jsr
 @inject IProductService ProductService
 @inject ICartService CartService
 @inject ILocalStorageService LocalStorage
 @inject IToastService ToastService
 
-<div class="media">
-	
+@if (string.IsNullOrEmpty(userdata))
+{
+	<p><a href="/login">LOGIN TO ACCESS THIS DATA</a></p>
+}
+else
+{
+	<div class="media">
 	<div class="media-img-big-wrapper mr-2">
 		<img class="media-img-big" src="@product.Image" alt="@product.Title" />
 	</div>
@@ -43,8 +51,11 @@
 		<button class="btn btn-primary" @onclick="AddToCart"> <i class="oi oi-cart"></i>&nbsp;&nbsp;&nbsp;Добавить в корзину</button>
 	</div>
 </div>
+}
+
 
 @code {
+	string userdata;
 	private Product product = new Product();
 	private int currentEditionId = 1;
 
@@ -53,12 +64,61 @@
 	[Parameter]
 	public int Id { get; set; }
 
+	private async Task<string> GetJWT()
+	{
+		userdata = await jsr.InvokeAsync<string>("localStorage.getItem", "user").ConfigureAwait(false);
+		if (!string.IsNullOrWhiteSpace(userdata))
+		{
+			var dataArray = userdata.Split(';', 2);
+			if (dataArray.Length == 2)
+				return dataArray[1];
+		}
+		return null;
+	}
+
 	protected override async Task OnParametersSetAsync()
 	{
-		product = await ProductService.GetProduct(Id);
-		if(product.Variants.Count > 0)
+			var requestMsg = new HttpRequestMessage(HttpMethod.Get, $"/api/weatherforecast/{DateTime.Now.ToString("yyyy-MM-dd")}");
+			requestMsg.Headers.Add("Authorization", "Bearer " + await GetJWT());
+			var response = await Http.SendAsync(requestMsg);
+			if (response.StatusCode == System.Net.HttpStatusCode.Unauthorized) // NOTE: THEN TOKEN HAS EXPIRED
+			{
+				await jsr.InvokeVoidAsync("localStorage.removeItem", "user").ConfigureAwait(false);
+				userdata = null;
+			}
+
+			else if (response.StatusCode == System.Net.HttpStatusCode.NoContent)
+				product = null;
+			else if (response.IsSuccessStatusCode)
+			{
+			product = await ProductService.GetProduct(Id);
+				if(product.Variants.Count > 0)
+				{
+						currentEditionId = product.Variants[0].EditionId;
+				}
+			}
+	}
+	protected override async Task OnInitializedAsync()
+	{
+		await base.OnInitializedAsync();
+		try
 		{
-			currentEditionId = product.Variants[0].EditionId;
+			var requestMsg = new HttpRequestMessage(HttpMethod.Get, "/api/product");
+			requestMsg.Headers.Add("Authorization", "Bearer " + await GetJWT());
+			var response = await Http.SendAsync(requestMsg);
+			if (response.StatusCode == System.Net.HttpStatusCode.Unauthorized) // NOTE: THEN TOKEN HAS EXPIRED
+			{
+				await jsr.InvokeVoidAsync("localStorage.removeItem", "user").ConfigureAwait(false);
+				userdata = null;
+			}
+			else if (response.StatusCode == System.Net.HttpStatusCode.NoContent)
+				product = null;
+			else if (response.IsSuccessStatusCode)
+				product = await ProductService.GetProduct(Id);
+		}
+		catch (Exception ex)
+		{
+
 		}
 	}
 

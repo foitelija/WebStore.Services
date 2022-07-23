@@ -1,6 +1,9 @@
-﻿@inject ICategoryService CategoryService
+﻿@using BlazorShop.Shared
+@inject ICategoryService CategoryService
 @inject ILocalStorageService localStorage
 @inject AuthenticationStateProvider AuthStateProvider
+@inject HttpClient Http
+@inject IJSRuntime jsr
 
 
 <div class="top-row pl-4 navbar navbar-dark">
